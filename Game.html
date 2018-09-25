@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Metor shower</title>
+</head>
+
+<body>
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <script>
+        var canvas, canvasContext, imgAssests;
+
+        window.onload = function() {
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
+
+            imgAssests = loadImgAssests();
+
+            document.addEventListener('keydown', keyPressed);
+            document.addEventListener('keyup', keyReleased);
+
+            setInterval(mainloop, 1000 / 50);
+        }
+
+        /* player info */
+        var playerXpos = 0;
+        var playerYpos = 0;
+        const PLAYER_WIDTH = 40;
+        const PLAYER_HEIGHT = 60;
+        var playerXspeed = 4;
+
+        /* playerBlock KeyPressing */
+        const LEFT_ARROW_KEY = 37;
+        const RIGHT_ARROW_KEY = 39;
+        var leftArrowPressed = false;
+        var rightArrowPressed = false;
+
+        var settingUp = true;
+
+        function mainloop() {
+            drawPics(img.bg, 0, 0, canvas.width, canvas.height)
+            drawPics(img.player, playerXpos, playerYpos, PLAYER_WIDTH, PLAYER_HEIGHT); //player
+
+            playerMove();
+
+            if (settingUp) {
+                setUp();
+                settingUp = false;
+            }
+        }
+
+        function setUp() {
+            playerXpos = canvas.width / 2 - PLAYER_WIDTH / 2;
+            playerYpos = canvas.height - PLAYER_HEIGHT * 2;
+        }
+
+
+        function keyPressed(evt) {
+            if (evt.keyCode == LEFT_ARROW_KEY) {
+                leftArrowPressed = true;
+            }
+
+            if (evt.keyCode == RIGHT_ARROW_KEY) {
+                rightArrowPressed = true;
+            }
+
+        }
+
+        function keyReleased(evt) {
+
+            if (evt.keyCode == LEFT_ARROW_KEY) {
+                leftArrowPressed = false;
+            }
+
+            if (evt.keyCode == RIGHT_ARROW_KEY) {
+                rightArrowPressed = false;
+            }
+
+        }
+
+        function playerMove() {
+            if (rightArrowPressed) {
+                playerXpos += playerXspeed;
+            }
+            if (leftArrowPressed) {
+                playerXpos -= playerXspeed;
+            }
+        }
+
+
+        imgAssests = loadImgAssests(); // this is a function you will make and this ensures it loads all images before the game plays. 
+
+        function loadImgAssests() {
+
+            img = {}; // making an img object 
+
+            img.player = new Image(); // creating an new player object that is an image 
+            img.player.src = 'images/ship.png' // locates the images 
+            img.bg = new Image(); // creating an new player object that is an image 
+            img.bg.src = 'images/bg.jpg' // locates the images 
+
+            return img; // makes the img object to be useable to draw an image 
+
+        }
+
+        function drawPics(src, x, y, w, h) {
+            canvasContext.drawImage(src, x, y, w, h);
+        }
+
+
+
+        function colorRect(x, y, w, h, color) {
+            canvasContext.fillStyle = color;
+            canvasContext.fillRect(x, y, w, h);
+        }
+    </script>
+</body>
+
+</html>
