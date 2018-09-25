@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>CanvasPong</title>
+</head>
+
+<body>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <script>
+        var canvas, canvasContext;
+
+        window.onload = function() {
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
+
+            for (i = 0; i < brickCount; i++) {
+                brickArray.push(randBrick());
+            }
+
+            setInterval(mainloop, 1000 / 50);
+        }
+
+        var brickXpos, brickYpos;
+        var brickYspeed = 5;
+        var brickXspeed = 5;
+        var brickWidth = 10;
+        var brickHeight = 10;
+
+
+        var brickArray = [];
+        var brickCount = 4;
+
+
+
+        function brickRender() {
+            brickArray.forEach(function(brick, index) {
+
+                    colorRect(brick.brickXpos, brick.brickYpos)
+                }
+            }
+
+            function mainloop() {
+                colorRect(brickXpos, 0, canvas.width, canvas.height, 'black');
+                colorRect(brickXpos, brickYpos, brickWidth, brickHeight, 'red');
+
+
+
+                brickMovement();
+            }
+
+            function randomBrick() {
+                brickWidth = Math.floor(Math.random() * )(5 - 40) + 1);
+            brickHeight = Math.floor(Math.random() * )(5 - 40) + 1);
+
+        new randomBrick = {
+            brickWidth: brickWidth,
+            brickHieght: brickHieght,
+            brickXpos: Math.floor(Math.random() * (0 - canvas.width - brickWidth) + 1),
+            brickYpos: Math.floor(Math.random() * (0 - canvas.width - brickWidth) + 1),
+            brickXspeed: math.floor(Math.random() * 30 + 1),
+            brickYspeed: math.floor(Math.random() * 30 + 1)
+
+        }
+        return randBrick;
+
+
+
+
+
+        function brickMovement() {
+            brickXpos += brickXspeed;
+            brickYpos += brickYspeed;
+
+            if (brickXpos > canvas.width - brickWidth) {
+                brickXspeed *= -1;
+            }
+            if (brickXpos < 0) {
+                brickXspeed *= -1;
+            }
+            if (brickYpos > canvas.height - brickHeight) {
+                brickYspeed *= -1;
+            }
+        }
+
+
+        function colorRect(x, y, w, h, c) {
+            canvasContext.fillStyle = c;
+            canvasContext.fillRect(x, y, w, h);
+        }
+
+    </script>
+</body>
+
+</html>
